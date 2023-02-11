@@ -1,8 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {FaStar} from 'react-icons/fa';
+
+const createArray = (length) => [...Array(length)];
+
+//create star component
+function Star({ selected = false, onSelect }) {
+  return (
+    <FaStar
+      color={ selected ? 'Red' : 'gray' }
+      onClick={onSelect}
+    />
+  );
+}
+function StarRating({ totalstars = 5 }) {
+  // use the useState
+  const [selectstars, setSelectstars] = useState(0)
+  return createArray(totalstars).map((n, i) => (
+    <Star key={ i }
+      selected={ selectstars > i }
+      onSelect={ () => setSelectstars(i + 1) }
+    />
+  ))
+}
+
+function App() {
+  return (
+    <StarRating  />
+  );
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -11,7 +38,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
